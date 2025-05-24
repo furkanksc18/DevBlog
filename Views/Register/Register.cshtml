@@ -1,0 +1,164 @@
+@model User
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Hesap Oluştur</h2>
+                        <p class="text-muted">Blog topluluğumuza katılmak için kayıt olun</p>
+                    </div>
+                    
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 mb-4"></div>
+                        
+                        <!-- İsim ve Soyisim -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Name" class="form-label fw-semibold">İsim</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-person text-primary"></i>
+                                    </span>
+                                    <input asp-for="Name" type="text" class="form-control border-start-0" required>
+                                </div>
+                                <span asp-validation-for="Name" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Surname" class="form-label fw-semibold">Soyisim</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-person text-primary"></i>
+                                    </span>
+                                    <input asp-for="Surname" type="text" class="form-control border-start-0" required>
+                                </div>
+                                <span asp-validation-for="Surname" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- Yaş ve Unvan -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Birthday" class="form-label fw-semibold">Yaş</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-cake2 text-primary"></i>
+                                    </span>
+                                    <input asp-for="Birthday" type="date" class="form-control border-start-0" min="18" max="99" required>
+                                </div>
+                                <span asp-validation-for="Birthday" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Title" class="form-label fw-semibold">Unvan</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-briefcase text-primary"></i>
+                                    </span>
+                                    <input asp-for="Title" type="text" class="form-control border-start-0" required>
+                                </div>
+                                <span asp-validation-for="Title" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Kullanıcı Adı ve E-posta -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="form-label fw-semibold">E-posta</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-envelope text-primary"></i>
+                                    </span>
+                                    <input asp-for="Email" type="email" class="form-control border-start-0" required>
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Nick" class="form-label fw-semibold">Kullanıcı Adı</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-at text-primary"></i>
+                                    </span>
+                                    <input asp-for="Nick" type="text" class="form-control border-start-0" required>
+                                </div>
+                                <span asp-validation-for="Nick" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- Şifre Alanları -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Password" class="form-label fw-semibold">Şifre</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-lock text-primary"></i>
+                                    </span>
+                                    <input asp-for="Password" type="password" class="form-control border-start-0" required 
+                                           pattern=".{1,}" title="En az 8 karakter giriniz">
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Şifre Tekrar</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-lock-fill text-primary"></i>
+                                    </span>
+                                    <input type="password" class="form-control border-start-0" id="confirmPassword" name="confirmPassword" required>
+                                </div>
+                                <span id="passwordError" class="text-danger small" style="display:none;">Şifreler uyuşmuyor!</span>
+                            </div>
+                        </div>
+
+                        <!-- Kayıt Butonu -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg py-3 rounded-3">
+                                <i class="bi bi-person-plus me-2"></i>Kayıt Ol
+                            </button>
+                        </div>
+
+                        <!-- Login Sayfası -->
+                        <div class="text-center mt-4">
+                            <p class="mb-0">Hesabın var mı? <a class="text-primary fw-semibold text-decoration-none" asp-action="Login">Giriş Yap</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const password = document.getElementById('Password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const errorSpan = document.getElementById('passwordError');
+            const form = document.querySelector('form');
+
+            function validatePassword() {
+                if (password.value !== confirmPassword.value) {
+                    errorSpan.style.display = 'block';
+                    confirmPassword.classList.add('is-invalid');
+                    return false;
+                } else {
+                    errorSpan.style.display = 'none';
+                    confirmPassword.classList.remove('is-invalid');
+                    return true;
+                }
+            }
+
+            // Her tuş vuruşunda kontrol
+            [password, confirmPassword].forEach(field => {
+                field.addEventListener('input', validatePassword);
+            });
+            
+            // Form gönderilirken kontrol
+            form.addEventListener('submit', function(e) {
+                if (!validatePassword()) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+            <i class="fas fa-blog"></i> DevBlog
+        </a>
+
+        <!-- Menü Öğeleri -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                </li>
+            </ul>
+
+            <!-- Sağ Taraf Öğeleri -->
+            <div class="d-flex align-items-center">
+                <!-- Profil Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-light btn-sm rounded-circle p-2" 
+                            type="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index"><i class="fas fa-user-circle me-2"></i>Profil</a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li><a class="dropdown-item text-danger" asp-controller="Register" asp-action="Cikis">
+                            <i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

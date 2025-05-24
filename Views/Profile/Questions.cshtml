@@ -1,0 +1,113 @@
+﻿@model HomeViewModel
+            
+            <!-- Search 
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <form asp-action="Index" method="post" class="flex-grow-1 me-3">
+                    <input asp-for="Search" type="search" class="form-control" placeholder="Sorular arasında ara...">
+                </form>
+            </div>-->
+
+            <!-- Questions List -->
+            @foreach(var q in Model.Questions.OrderByDescending(q => q.PublishedOn))
+            {
+                string t = Model.TimeCalculator(DateTime.UtcNow - q.PublishedOn);
+                <div class="card mb-4 shadow-sm border-secondary">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <a style="text-decoration: none;" asp-controller="Profile" asp-action="Index" asp-route-Nick="@q.User.Nick">
+                            <div class="d-flex align-items-center">
+                                <img src="/img/default-avatar.jpg" alt="Profil Fotoğrafı" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                                <div>
+                                    <strong>@q.User.Nick</strong>
+                                    <div class="text-muted small">@t</div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="d-flex align-items-center">
+                            <button type="button" class="p-0 ms-2" title="Rapor Et" style="background: none; border: none; box-shadow: none; cursor: pointer;">
+                                <i class="bi bi-exclamation-circle text-danger"></i>
+                            </button>
+                            @if(Model.Nick == q.User.Nick)
+                            {
+                                <div class="dropdown">
+                                    <button class="btn btn-link p-0 ms-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="EditQuestion" asp-route-id="@q.QuestionId"><i class="bi bi-pencil me-2"></i>Düzenle</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="DeleteQuestion" asp-route-id="@q.QuestionId" onclick="return confirm('Bu soruyu silmek istediğinizden emin misiniz?')"><i class="bi bi-trash me-2"></i>Sil</a></li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@q.QuestionName</h5>
+                        <p class="card-text">@q.QuestionInfo</p>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button class="btn btn-outline-success btn-sm" title="Beğen">
+                                <i class="bi bi-hand-thumbs-up"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" title="Beğenme">
+                                <i class="bi bi-hand-thumbs-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#comments_@q.QuestionId">
+                            Yorumlar (@q.Comments.Count())
+                        </button>
+                        <div class="collapse mt-3" id="comments_@q.QuestionId">
+                            <form asp-action="AddComment" method="post" class="mb-3 d-flex">
+                                <input asp-for="Comment.CommentInfo" type="text" class="form-control me-2" placeholder="Yorum yapın..." required>
+                                <input asp-for="Comment.QuestionId" type="hidden" value="@q.QuestionId">
+                                <button type="submit" class="btn btn-primary">Ekle</button>
+                            </form>
+                            @foreach(var c in q.Comments.OrderByDescending(c => c.PublishedOn))
+                            {
+                                string t1 = Model.TimeCalculator(DateTime.UtcNow - c.PublishedOn);
+                                <div class="card mb-2 border-secondary">
+                                    <div class="card-header d-flex align-items-center justify-content-between">
+                                        <a style="text-decoration: none;" asp-controller="Profile" asp-action="Index" asp-route-Nick="@c.User.Nick">
+                                            <div class="d-flex align-items-center">
+                                                <img src="/img/default-avatar.jpg" alt="Profil Fotoğrafı" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                                <div>
+                                                    <strong>@c.User.Nick</strong>
+                                                    <div class="text-muted small">@t1</div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="d-flex align-items-center">
+                                            <button class="btn btn-link p-0" title="Rapor Et" style="background: none; border: none; box-shadow: none; cursor: pointer;">
+                                                <i class="bi bi-exclamation-circle text-danger"></i>
+                                            </button>
+                                            @if(Model.Nick == c.User.Nick)
+                                            {
+                                                <div class="dropdown ms-2">
+                                                    <button class="btn btn-link p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="EditComment"  asp-route-id="@c.CommentId"><i class="bi bi-pencil me-2"></i>Düzenle</a></li>
+                                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="DeleteComment"  asp-route-id="@c.CommentId" onclick="return confirm('Bu yorumu silmek istediğinizden emin misiniz?')"><i class="bi bi-trash me-2"></i>Sil</a></li>
+                                                    </ul>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="card-body py-2">
+                                        <p class="mb-1">@c.CommentInfo</p>
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <button class="btn btn-outline-success btn-sm" title="Beğen">
+                                                <i class="bi bi-hand-thumbs-up"></i>
+                                            </button>
+                                            <button class="btn btn-outline-danger btn-sm" title="Beğenme">
+                                                <i class="bi bi-hand-thumbs-down"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }

@@ -1,0 +1,46 @@
+    @model Question
+    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Soruyu Düzenle</h3>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="EditQuestion" method="post">
+                            <!-- Değişmeyen Bilgiler -->
+                            <input type="hidden" asp-for="QuestionId" value="@Model.QuestionId">
+
+                            <!-- Soru Başlığı -->
+                            <div class="mb-3">
+                                <label for="questionName" class="form-label">Soru Başlığı</label>
+                                <input asp-for="QuestionName"
+                                    type="text" 
+                                    class="form-control" 
+                                    id="questionName" 
+                                    placeholder="Sorunuzu kısaca özetleyin"
+                                    required>
+                            </div>
+
+                            <!-- Soru İçeriği -->
+                            <div class="mb-3">
+                                <label for="questionContent" class="form-label">Soru İçeriği</label>
+                                <textarea asp-for="QuestionInfo"
+                                    class="form-control" 
+                                    id="questionContent" 
+                                    rows="6"
+                                    placeholder="Sorunuzu detaylı bir şekilde açıklayın"
+                                    required></textarea>
+                            </div>
+
+                            <!-- Gönder Butonu -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Soruyu Gönder</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

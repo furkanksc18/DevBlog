@@ -1,0 +1,9 @@
+sorular ve yorumlar silinebilsin +
+Kullanıcıdan yaş yerine doğum tarihi al +
+Kullanıcı profilleri oluştur +
+
+
+Kullanıcının Profilinden yorumlarını ve sorularını listeleyebilsin
+sorular ve kullanıcılara etiket oluştur
+admin kullanıcı oluştur ve yetkilendir
+yorumlara puan verebilme olsun

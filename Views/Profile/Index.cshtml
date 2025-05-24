@@ -1,0 +1,126 @@
+﻿@model ProfileViewModel
+
+<div class="container py-5">
+    @{var User = Model.User;}
+    <div class="row g-4">
+        
+        <!-- Profil Bölümü -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="position-relative">
+                    <div class="bg-gradient-primary" style="height: 160px; background: linear-gradient(45deg, #4e73df, #224abe);"></div>
+                    <div class="position-absolute top-50 start-50 translate-middle text-center" style="margin-top: 40px;">
+                        <img src="/img/default-avatar.jpg" class="rounded-circle border border-4 border-white shadow-lg" width="160" alt="Profil">
+                    </div>
+                </div>
+                <div class="card-body pt-5 mt-4 text-center">
+                    <h3 class="fw-bold mb-1">@User.Name @User.Surname</h3>
+                    <p class="text-primary mb-4">@User.Title</p>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <div class="p-3 rounded-3 bg-light">
+                                <div class="h4 mb-0 fw-bold text-primary">@User.Questions.Count()</div>
+                                <small class="text-muted">Soru</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 rounded-3 bg-light">
+                                <div class="h4 mb-0 fw-bold text-primary">@User.Comments.Count()</div>
+                                <small class="text-muted">Yorum</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column gap-3 mb-4">
+                        <div class="d-flex align-items-center justify-content-center gap-2 text-muted p-2 rounded-3 bg-light">
+                            <i class="bi bi-person fs-5"></i>
+                            <span>@User.Nick</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center gap-2 text-muted p-2 rounded-3 bg-light">
+                            <i class="bi bi-cake2 fs-5"></i>
+                            <span>@(Math.Floor((DateTime.UtcNow - User.Birthday).TotalDays / 365.25)) yaşında</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center gap-2 text-muted p-2 rounded-3 bg-light">
+                            <i class="bi bi-calendar3 fs-5"></i>
+                            <span>@User.PublishedOn.ToString("dd.MM.yyyy")'dan beri üye</span>
+                        </div>
+                    </div>
+
+                    <div class="text-start border-top pt-4">
+                        <h6 class="fw-semibold mb-3 d-flex align-items-center">
+                            <i class="bi bi-info-circle me-2 text-primary"></i>Hakkında
+                        </h6>
+                        <p class="text-muted mb-0">@User.About</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- İçerik Bölümü -->
+        <div class="col-lg-8">
+            <div class="d-flex flex-column gap-4">
+
+                <!-- Sorular -->
+                @if(User.Questions.Any())
+                { 
+                    var Question = User.Questions.OrderByDescending(q => q.PublishedOn).FirstOrDefault();
+                    <a asp-action="Questions" asp-route-QuestionId="@Question.QuestionId" style="text-decoration: none;" >
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <div class="card-header bg-white border-0 py-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-primary bg-opacity-10 p-3 rounded-4">
+                                        <i class="bi bi-question-circle text-primary fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1 fw-semibold">Sorular</h5>
+                                        <small class="text-muted">@User.Questions.Count() soru paylaşıldı</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <h5 class="mb-0">@Question.QuestionName</h5>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">
+                                        @Model.TimeCalculator(DateTime.UtcNow - Question.PublishedOn)
+                                    </span>
+                                </div>
+                                <p class="text-muted mb-0">@Question.QuestionInfo</p>
+                            </div>
+                        </div>
+                    </a>
+                }
+
+                <!-- Yorumlar -->
+                @if(User.Comments.Any())
+                { 
+                    var Comment = User.Comments.OrderByDescending(q => q.PublishedOn).FirstOrDefault();
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-header bg-white border-0 py-4">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-4">
+                                    <i class="bi bi-chat-dots text-primary fs-4"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1 fw-semibold">Yorumlar</h5>
+                                    <small class="text-muted">@User.Comments.Count() yorum yapıldı</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <p class="mb-0">@Comment.CommentInfo</p>
+                                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">
+                                    @Model.TimeCalculator(DateTime.UtcNow - Comment.PublishedOn)
+                                </span>
+                            </div>
+                            <a href="#" class="btn btn-light text-primary px-4 py-2 rounded-3">
+                                <i class="bi bi-box-arrow-up-right me-2"></i> Soruyu Gör
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

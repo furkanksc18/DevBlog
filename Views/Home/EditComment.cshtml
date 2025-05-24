@@ -1,0 +1,18 @@
+@model Comment
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Yorum Düzenle</h1>
+            <form asp-action="EditComment" method="post">
+                <input type="hidden" asp-for="CommentId" />
+                
+                <div class="form-group">
+                    <label asp-for="CommentInfo">Yorum</label>
+                    <textarea asp-for="CommentInfo" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+            </form>
+        </div>
+    </div>
+</div>
