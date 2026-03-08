@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("sql"));});
 
 builder.Services.AddDbContext<DataContext>(options => {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("sql"));});
+    options.UseSqlite(builder.Configuration.GetConnectionString("sqlite"));});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 

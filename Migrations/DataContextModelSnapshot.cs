@@ -84,8 +84,8 @@ namespace Blog.Migrations
                     b.Property<bool>("Admin")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
@@ -135,7 +135,7 @@ namespace Blog.Migrations
             modelBuilder.Entity("Blog.Entity.Question", b =>
                 {
                     b.HasOne("Blog.Entity.User", "User")
-                        .WithMany("Question")
+                        .WithMany("Questions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -152,7 +152,7 @@ namespace Blog.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Question");
+                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }
